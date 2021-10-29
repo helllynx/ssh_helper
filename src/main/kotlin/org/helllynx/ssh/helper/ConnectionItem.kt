@@ -8,6 +8,6 @@ data class ConnectionItem(
     val label: String = "",
     val host: String = "",
     val port: String = "22",
-    val user: String = "",
+    val user: String = "root",
     val password: String = ""
 )

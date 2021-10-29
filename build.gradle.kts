@@ -20,7 +20,7 @@ repositories {
 dependencies {
     implementation(compose.desktop.currentOs)
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
-    implementation("org.junit.jupiter:junit-jupiter:5.7.0")
+    implementation("org.junit.jupiter:junit-jupiter:5.8.1")
 }
 
 tasks.test {

@@ -45,9 +45,7 @@ internal fun MainContent(
         }
 
         Input(
-            text = inputText,
             onAddClicked = onAddItemClicked,
-            onTextChanged = onInputTextChanged
         )
     }
 }
@@ -88,20 +86,10 @@ private fun Item(
     item: ConnectionItem,
     onClicked: () -> Unit,
     onLongClicked: () -> Unit,
-//    onDoneChanged: (Boolean) -> Unit,
     onDeleteClicked: () -> Unit
 ) {
     Row(modifier = Modifier.combinedClickable(onClick = onClicked, onLongClick = onLongClicked)) {
         Spacer(modifier = Modifier.width(8.dp))
-
-//        Checkbox(
-//            checked = item.isDone,
-//            modifier = Modifier.align(Alignment.CenterVertically),
-//            onCheckedChange = onDoneChanged,
-//        )
-
-        Spacer(modifier = Modifier.width(8.dp))
-
         Text(
             text = AnnotatedString(item.label),
             modifier = Modifier.weight(1F).align(Alignment.CenterVertically),
@@ -132,22 +120,9 @@ private fun Item(
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 private fun Input(
-    text: String,
-    onTextChanged: (String) -> Unit,
     onAddClicked: () -> Unit
 ) {
-    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(8.dp)) {
-//        OutlinedTextField(
-//            value = text,
-//            modifier = Modifier
-//                .weight(weight = 1F)
-//                .onKeyUp(key = Key.Enter, action = onAddClicked),
-//            onValueChange = onTextChanged,
-//            label = { Text(text = "Add a todo") }
-//        )
-
-//        Spacer(modifier = Modifier.width(8.dp))
-
+    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.End, modifier = Modifier.padding(8.dp)) {
         IconButton(onClick = onAddClicked) {
             Icon(
                 imageVector = Icons.Default.Add,
