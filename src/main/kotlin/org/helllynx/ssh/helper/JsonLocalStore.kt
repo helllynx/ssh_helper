@@ -24,9 +24,7 @@ class JsonLocalStore() : Store {
     }
 
     override fun saveConnections(connections: List<ConnectionItem>) {
-        connections.forEach {
-            saveConnection(it)
-        }
+        writeFileCreateIfNotExists(pathToJsonFile, Json.encodeToString(connections))
     }
 
     override fun getConnectionById(id: Long): ConnectionItem {

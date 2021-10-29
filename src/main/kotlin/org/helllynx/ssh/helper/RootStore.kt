@@ -20,6 +20,7 @@ internal class RootStore {
 
     fun onItemDeleteClicked(id: Long) {
         setState { copy(items = items.filterNot { it.id == id }) }
+        store.saveConnections(state.items)
     }
 
     fun onAddItemClicked() {
