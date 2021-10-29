@@ -20,6 +20,12 @@ repositories {
 dependencies {
     implementation(compose.desktop.currentOs)
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
+    implementation("org.junit.jupiter:junit-jupiter:5.7.0")
+}
+
+tasks.test {
+    // Use the built-in JUnit support of Gradle.
+    useJUnitPlatform()
 }
 
 tasks.withType<KotlinCompile>() {

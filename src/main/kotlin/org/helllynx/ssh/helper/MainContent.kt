@@ -109,6 +109,13 @@ private fun Item(
             overflow = TextOverflow.Ellipsis
         )
 
+        Text(
+            text = AnnotatedString(item.host),
+            modifier = Modifier.weight(1F).align(Alignment.CenterVertically),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
+        )
+
         Spacer(modifier = Modifier.width(8.dp))
 
         IconButton(onClick = onDeleteClicked) {

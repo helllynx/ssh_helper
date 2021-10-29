@@ -15,10 +15,9 @@ internal fun EditDialog(
     onLabelTextChanged: (String) -> Unit,
     onHostTextChanged: (String) -> Unit,
     onPortTextChanged: (String) -> Unit,
-//    onUserTextChanged: (String) -> Unit,
-//    onPasswordTextChanged: (String) -> Unit,
+    onUserTextChanged: (String) -> Unit,
+    onPasswordTextChanged: (String) -> Unit,
     onSaveClicked: () -> Unit,
-    onDoneChanged: (Boolean) -> Unit,
 ) {
     Dialog(
         title = "Edit connection",
@@ -44,6 +43,20 @@ internal fun EditDialog(
                 modifier = Modifier.fillMaxWidth().sizeIn(minHeight = 24.dp),
                 label = { Text("port") },
                 onValueChange = onPortTextChanged,
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            TextField(
+                value = item.user,
+                modifier = Modifier.fillMaxWidth().sizeIn(minHeight = 24.dp),
+                label = { Text("user") },
+                onValueChange = onUserTextChanged,
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            TextField(
+                value = item.password,
+                modifier = Modifier.fillMaxWidth().sizeIn(minHeight = 24.dp),
+                label = { Text("password") },
+                onValueChange = onPasswordTextChanged,
             )
             OutlinedButton(
                 onClick = onSaveClicked,

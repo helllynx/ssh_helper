@@ -59,8 +59,9 @@ fun RootContent(modifier: Modifier = Modifier) {
             onLabelTextChanged = model::onLabelTextChanged,
             onHostTextChanged = model::onHostTextChanged,
             onPortTextChanged = model::onPortTextChanged,
+            onUserTextChanged = model::onUserTextChanged,
+            onPasswordTextChanged = model::onPasswordTextChanged,
             onSaveClicked = model::onSaveClicked,
-            onDoneChanged = model::onEditorDoneChanged,
         )
     }
 }

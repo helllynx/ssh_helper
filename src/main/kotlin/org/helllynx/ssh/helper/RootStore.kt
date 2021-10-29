@@ -3,6 +3,8 @@ package org.helllynx.ssh.helper
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 internal class RootStore {
     val store: Store = JsonLocalStore()
@@ -11,7 +13,23 @@ internal class RootStore {
         private set
 
     fun onItemClicked(id: Long) {
-        println(getItem(id))
+//        if record[0]['password']:
+//        return f"sshpass -p {record[0]['password']} ssh {record[0]['user']}@{record[0]['host']} -p {record[0]['port']}"
+//        else:
+//        return f"ssh {record[0]['user']}@{record[0]['host']} -p {record[0]['port']}"
+
+        val connection = state.items.first {
+            it.id == id
+        }
+
+        val command = when(connection.password.isEmpty()) {
+            true -> "konsole -e ssh ${connection.user}@${connection.host} -p ${connection.port}"
+            false -> "konsole -e sshpass -p ${connection.password} ssh ${connection.user}@${connection.host} -p ${connection.port}"
+        }
+
+        GlobalScope.launch {
+            command.runCommand()
+        }
     }
 
     fun onItemLongClicked(id: Long) {
@@ -58,6 +76,18 @@ internal class RootStore {
     fun onPortTextChanged(text: String) {
         setState {
             updateItem(id = requireNotNull(editingItemId)) { it.copy(port = text) }
+        }
+    }
+
+    fun onUserTextChanged(text: String) {
+        setState {
+            updateItem(id = requireNotNull(editingItemId)) { it.copy(user = text) }
+        }
+    }
+
+    fun onPasswordTextChanged(text: String) {
+        setState {
+            updateItem(id = requireNotNull(editingItemId)) { it.copy(password = text) }
         }
     }
 
