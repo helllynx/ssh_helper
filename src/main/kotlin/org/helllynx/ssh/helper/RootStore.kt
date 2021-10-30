@@ -5,6 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.nio.file.Files
+import java.nio.file.Paths
 
 internal class RootStore {
     val store: Store = JsonLocalStore()
@@ -22,13 +24,19 @@ internal class RootStore {
             it.id == id
         }
 
-        val command = when(connection.password.isEmpty()) {
+        val commandSsh = when (connection.password.isEmpty()) {
             true -> "konsole -e ssh ${connection.user}@${connection.host} -p ${connection.port}"
             false -> "konsole -e sshpass -p ${connection.password} ssh ${connection.user}@${connection.host} -p ${connection.port}"
         }
+        val pathToSshfsMountDir = "${System.getProperty("user.home")}/SSH_HELPER/${connection.label.filter { !it.isWhitespace() }}"
+        val commandSshfs =
+            "sshfs ${connection.user}@${connection.host}:/ $pathToSshfsMountDir -p ${connection.port}"
+
+        Files.createDirectories(Paths.get(pathToSshfsMountDir))
 
         GlobalScope.launch {
-            command.runCommand()
+            commandSsh.runCommand()
+            commandSshfs.runCommand()
         }
     }
 
@@ -106,7 +114,10 @@ internal class RootStore {
     private fun RootState.updateItem(id: Long, transformer: (ConnectionItem) -> ConnectionItem): RootState =
         copy(items = items.updateItem(id = id, transformer = transformer))
 
-    private fun List<ConnectionItem>.updateItem(id: Long, transformer: (ConnectionItem) -> ConnectionItem): List<ConnectionItem> =
+    private fun List<ConnectionItem>.updateItem(
+        id: Long,
+        transformer: (ConnectionItem) -> ConnectionItem
+    ): List<ConnectionItem> =
         map { item -> if (item.id == id) transformer(item) else item }
 
     private fun initialState(): RootState =
