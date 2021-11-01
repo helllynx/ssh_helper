@@ -1,19 +1,23 @@
 package org.helllynx.ssh.helper
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -25,15 +29,17 @@ import org.helllynx.ssh.manager.common.org.helllynx.ssh.helper.rememberScrollbar
 internal fun MainContent(
     modifier: Modifier = Modifier,
     items: List<ConnectionItem>,
-    inputText: String,
     onItemClicked: (id: Long) -> Unit,
     onItemLongClicked: (id: Long) -> Unit,
     onItemDeleteClicked: (id: Long) -> Unit,
     onAddItemClicked: () -> Unit,
-    onInputTextChanged: (String) -> Unit,
+    onSettingsClicked: () -> Unit,
 ) {
     Column(modifier) {
-        TopAppBar(title = { Text(text = "SSH Helper") })
+        Header(
+            onAddClicked = onAddItemClicked,
+            onSettingsClicked = onSettingsClicked,
+        )
 
         Box(Modifier.weight(1F)) {
             ListContent(
@@ -44,9 +50,7 @@ internal fun MainContent(
             )
         }
 
-        Input(
-            onAddClicked = onAddItemClicked,
-        )
+
     }
 }
 
@@ -119,15 +123,25 @@ private fun Item(
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-private fun Input(
-    onAddClicked: () -> Unit
+private fun Header(
+    onAddClicked: () -> Unit,
+    onSettingsClicked: () -> Unit,
 ) {
-    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.End, modifier = Modifier.padding(8.dp)) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.End,
+        modifier = Modifier.padding(8.dp).background(Color.LightGray, shape = RoundedCornerShape(4.dp) )
+    ) {
         IconButton(onClick = onAddClicked) {
             Icon(
                 imageVector = Icons.Default.Add,
-                contentDescription = null
+                contentDescription = "Add connection"
             )
+        }
+        IconButton(onClick = onSettingsClicked) {
+            Icon(Icons.Default.Settings, contentDescription = "Settings")
         }
     }
 }
+
+

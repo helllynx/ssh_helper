@@ -3,6 +3,7 @@ package org.helllynx.ssh.helper
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.nio.file.Files
@@ -14,12 +15,8 @@ internal class RootStore {
     var state: RootState by mutableStateOf(initialState())
         private set
 
+    @OptIn(DelicateCoroutinesApi::class)
     fun onItemClicked(id: Long) {
-//        if record[0]['password']:
-//        return f"sshpass -p {record[0]['password']} ssh {record[0]['user']}@{record[0]['host']} -p {record[0]['port']}"
-//        else:
-//        return f"ssh {record[0]['user']}@{record[0]['host']} -p {record[0]['port']}"
-
         val connection = state.items.first {
             it.id == id
         }
@@ -28,6 +25,7 @@ internal class RootStore {
             true -> "konsole -e ssh ${connection.user}@${connection.host} -p ${connection.port}"
             false -> "konsole -e sshpass -p ${connection.password} ssh ${connection.user}@${connection.host} -p ${connection.port}"
         }
+
         val pathToSshfsMountDir = "${System.getProperty("user.home")}/SSH_HELPER/${connection.label.filter { !it.isWhitespace() }}"
         val commandSshfs =
             "sshfs ${connection.user}@${connection.host}:/ $pathToSshfsMountDir -p ${connection.port}"
@@ -63,6 +61,10 @@ internal class RootStore {
 
     fun onInputTextChanged(text: String) {
         setState { copy(inputText = text) }
+    }
+
+    fun onSettingsClicked() {
+
     }
 
     fun onEditorCloseClicked() {
