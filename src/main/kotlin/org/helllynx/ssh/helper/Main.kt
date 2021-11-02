@@ -44,12 +44,11 @@ fun RootContent(modifier: Modifier = Modifier) {
     MainContent(
         modifier = modifier,
         items = state.items,
-        inputText = state.inputText,
         onItemClicked = model::onItemClicked,
         onItemLongClicked = model::onItemLongClicked,
         onItemDeleteClicked = model::onItemDeleteClicked,
         onAddItemClicked = model::onAddItemClicked,
-        onInputTextChanged = model::onInputTextChanged,
+        onSettingsClicked = model::onSettingsClicked,
     )
 
     state.editingItem?.also { item ->

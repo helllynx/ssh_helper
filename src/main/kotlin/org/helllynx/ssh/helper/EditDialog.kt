@@ -58,6 +58,7 @@ internal fun EditDialog(
                 label = { Text("password") },
                 onValueChange = onPasswordTextChanged,
             )
+            Spacer(modifier = Modifier.height(8.dp))
             OutlinedButton(
                 onClick = onSaveClicked,
             ) {

@@ -1,8 +1,6 @@
 package org.helllynx.ssh.manager.common.org.helllynx.ssh.helper
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -57,7 +55,7 @@ internal fun Dialog(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(8.dp),
-            contentAlignment = Alignment.Center,
+            contentAlignment = Alignment.TopCenter,
         ) {
             content()
         }
