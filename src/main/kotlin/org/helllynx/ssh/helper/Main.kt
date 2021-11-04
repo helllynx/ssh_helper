@@ -47,6 +47,7 @@ fun RootContent(modifier: Modifier = Modifier) {
         onItemClicked = model::onItemClicked,
         onItemLongClicked = model::onItemLongClicked,
         onItemDeleteClicked = model::onItemDeleteClicked,
+        onItemSshfsClicked = model::onItemSshfsClicked,
         onAddItemClicked = model::onAddItemClicked,
         onSettingsClicked = model::onSettingsClicked,
     )

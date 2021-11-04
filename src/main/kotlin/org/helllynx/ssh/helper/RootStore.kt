@@ -25,16 +25,8 @@ internal class RootStore {
             true -> "konsole -e ssh ${connection.user}@${connection.host} -p ${connection.port}"
             false -> "konsole -e sshpass -p ${connection.password} ssh ${connection.user}@${connection.host} -p ${connection.port}"
         }
-
-        val pathToSshfsMountDir = "${System.getProperty("user.home")}/SSH_HELPER/${connection.label.filter { !it.isWhitespace() }}"
-        val commandSshfs =
-            "sshfs ${connection.user}@${connection.host}:/ $pathToSshfsMountDir -p ${connection.port}"
-
-        Files.createDirectories(Paths.get(pathToSshfsMountDir))
-
         GlobalScope.launch {
             commandSsh.runCommand()
-            commandSshfs.runCommand()
         }
     }
 
@@ -45,6 +37,23 @@ internal class RootStore {
     fun onItemDeleteClicked(id: Long) {
         setState { copy(items = items.filterNot { it.id == id }) }
         store.saveConnections(state.items)
+    }
+
+    @OptIn(DelicateCoroutinesApi::class)
+    fun onItemSshfsClicked(id: Long) {
+        val connection = state.items.first {
+            it.id == id
+        }
+
+        val pathToSshfsMountDir = "${System.getProperty("user.home")}/SSH_HELPER/${connection.label.filter { !it.isWhitespace() }}"
+        val commandSshfs =
+            "sshfs ${connection.user}@${connection.host}:/ $pathToSshfsMountDir -p ${connection.port}"
+
+        Files.createDirectories(Paths.get(pathToSshfsMountDir))
+
+        GlobalScope.launch {
+            commandSshfs.runCommand()
+        }
     }
 
     fun onAddItemClicked() {

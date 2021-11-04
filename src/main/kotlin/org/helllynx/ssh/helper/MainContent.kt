@@ -10,9 +10,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -21,9 +19,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import org.helllynx.ssh.manager.common.org.helllynx.ssh.helper.MARGIN_SCROLLBAR
-import org.helllynx.ssh.manager.common.org.helllynx.ssh.helper.VerticalScrollbar
-import org.helllynx.ssh.manager.common.org.helllynx.ssh.helper.rememberScrollbarAdapter
 
 @Composable
 internal fun MainContent(
@@ -32,6 +27,7 @@ internal fun MainContent(
     onItemClicked: (id: Long) -> Unit,
     onItemLongClicked: (id: Long) -> Unit,
     onItemDeleteClicked: (id: Long) -> Unit,
+    onItemSshfsClicked: (id: Long) -> Unit,
     onAddItemClicked: () -> Unit,
     onSettingsClicked: () -> Unit,
 ) {
@@ -46,7 +42,8 @@ internal fun MainContent(
                 items = items,
                 onItemClicked = onItemClicked,
                 onItemLongClicked = onItemLongClicked,
-                onItemDeleteClicked = onItemDeleteClicked
+                onItemDeleteClicked = onItemDeleteClicked,
+                onItemSshfsClicked = onItemSshfsClicked,
             )
         }
 
@@ -60,6 +57,7 @@ private fun ListContent(
     onItemClicked: (id: Long) -> Unit,
     onItemLongClicked: (id: Long) -> Unit,
     onItemDeleteClicked: (id: Long) -> Unit,
+    onItemSshfsClicked: (id: Long) -> Unit,
 ) {
     Box {
         val listState = rememberLazyListState()
@@ -70,7 +68,8 @@ private fun ListContent(
                     item = item,
                     onClicked = { onItemClicked(item.id) },
                     onLongClicked = { onItemLongClicked(item.id) },
-                    onDeleteClicked = { onItemDeleteClicked(item.id) }
+                    onDeleteClicked = { onItemDeleteClicked(item.id) },
+                    onMountSshfs = { onItemSshfsClicked(item.id) },
                 )
 
                 Divider()
@@ -90,7 +89,8 @@ private fun Item(
     item: ConnectionItem,
     onClicked: () -> Unit,
     onLongClicked: () -> Unit,
-    onDeleteClicked: () -> Unit
+    onDeleteClicked: () -> Unit,
+    onMountSshfs: () -> Unit,
 ) {
     Row(modifier = Modifier.combinedClickable(onClick = onClicked, onLongClick = onLongClicked)) {
         Spacer(modifier = Modifier.width(8.dp))
@@ -109,6 +109,13 @@ private fun Item(
         )
 
         Spacer(modifier = Modifier.width(8.dp))
+
+        IconButton(onClick = onMountSshfs) {
+            Icon(
+                imageVector = Icons.Default.Share,
+                contentDescription = null
+            )
+        }
 
         IconButton(onClick = onDeleteClicked) {
             Icon(
