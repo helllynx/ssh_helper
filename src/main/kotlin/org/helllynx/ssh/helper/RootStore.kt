@@ -1,5 +1,6 @@
 package org.helllynx.ssh.helper
 
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -70,10 +71,6 @@ internal class RootStore {
 
     fun onInputTextChanged(text: String) {
         setState { copy(inputText = text) }
-    }
-
-    fun onSettingsClicked() {
-
     }
 
     fun onEditorCloseClicked() {

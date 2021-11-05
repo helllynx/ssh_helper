@@ -20,7 +20,6 @@ fun App() {
             modifier = Modifier.fillMaxSize()
         )
     }
-    
 }
 
 fun main() = application {
@@ -49,7 +48,7 @@ fun RootContent(modifier: Modifier = Modifier) {
         onItemDeleteClicked = model::onItemDeleteClicked,
         onItemSshfsClicked = model::onItemSshfsClicked,
         onAddItemClicked = model::onAddItemClicked,
-        onSettingsClicked = model::onSettingsClicked,
+        onSettingsClicked = { SettingsDialog() },
     )
 
     state.editingItem?.also { item ->

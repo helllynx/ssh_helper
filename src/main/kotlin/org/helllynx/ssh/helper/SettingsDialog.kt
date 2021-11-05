@@ -9,25 +9,15 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 internal fun SettingsDialog(
-    onCloseClicked: () -> Unit,
+    onCloseClicked: () -> Unit = {},
 ) {
     Dialog(
         title = "Edit connection",
         onCloseRequest = onCloseClicked,
     ) {
         Column(horizontalAlignment = Alignment.Start, verticalArrangement = Arrangement.Top) {
-            TextField(
-                value = item.password,
-                modifier = Modifier.fillMaxWidth().sizeIn(minHeight = 24.dp),
-                label = { Text("password") },
-                onValueChange = onPasswordTextChanged,
-            )
+            DropdownDemo()
             Spacer(modifier = Modifier.height(8.dp))
-            OutlinedButton(
-                onClick = onSaveClicked,
-            ) {
-                Text("Save")
-            }
         }
     }
 }
