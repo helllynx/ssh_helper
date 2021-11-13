@@ -111,6 +111,7 @@ internal class RootStore {
         store.saveConnections(state.items)
     }
 
+
     fun onEditorDoneChanged(isDone: Boolean) {
         setState {
             updateItem(id = requireNotNull(editingItemId)) { it.copy() }

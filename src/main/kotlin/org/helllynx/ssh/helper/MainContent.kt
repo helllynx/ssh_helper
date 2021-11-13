@@ -29,12 +29,11 @@ internal fun MainContent(
     onItemDeleteClicked: (id: Long) -> Unit,
     onItemSshfsClicked: (id: Long) -> Unit,
     onAddItemClicked: () -> Unit,
-    onSettingsClicked: () -> Unit,
 ) {
     Column(modifier) {
         Header(
             onAddClicked = onAddItemClicked,
-            onSettingsClicked = onSettingsClicked,
+            onSettingsClicked = {  },
         )
 
         Box(Modifier.weight(1F)) {

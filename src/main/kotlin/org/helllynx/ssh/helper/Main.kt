@@ -48,7 +48,6 @@ fun RootContent(modifier: Modifier = Modifier) {
         onItemDeleteClicked = model::onItemDeleteClicked,
         onItemSshfsClicked = model::onItemSshfsClicked,
         onAddItemClicked = model::onAddItemClicked,
-        onSettingsClicked = { SettingsDialog() },
     )
 
     state.editingItem?.also { item ->
@@ -63,6 +62,8 @@ fun RootContent(modifier: Modifier = Modifier) {
             onSaveClicked = model::onSaveClicked,
         )
     }
+
+
 }
 
 private val RootStore.RootState.editingItem: ConnectionItem?
