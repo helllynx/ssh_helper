@@ -11,6 +11,8 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
+import org.helllynx.ssh.helper.composable.EditDialog
+import org.helllynx.ssh.helper.model.ConnectionItem
 
 @Composable
 @Preview

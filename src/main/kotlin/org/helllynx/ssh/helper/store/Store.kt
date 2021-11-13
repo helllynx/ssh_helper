@@ -1,4 +1,6 @@
-package org.helllynx.ssh.helper
+package org.helllynx.ssh.helper.store
+
+import org.helllynx.ssh.helper.model.ConnectionItem
 
 interface Store {
     fun saveConnection(connection: ConnectionItem)

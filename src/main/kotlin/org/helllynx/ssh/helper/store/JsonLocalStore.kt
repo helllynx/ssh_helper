@@ -1,15 +1,25 @@
-package org.helllynx.ssh.helper
+package org.helllynx.ssh.helper.store
 
 
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import org.helllynx.ssh.helper.model.ConnectionItem
 import java.io.File
 import java.io.IOException
+import java.nio.file.Files
+import java.nio.file.Paths
 
-class JsonLocalStore() : Store {
+class JsonLocalStore : Store {
 
-    private val pathToJsonFile = "store.json"
+    private val pathToHome = System.getProperty("user.home")
+    private val pathToAppFolder = "$pathToHome/.ssh_helper"
+    private val pathToJsonFile = "$pathToAppFolder/store.json"
+
+    init {
+        Files.createDirectories(Paths.get(pathToAppFolder))
+    }
+
     override fun saveConnection(connection: ConnectionItem) {
         val oldData = readFileOrCreateIfNotExists(pathToJsonFile)
 

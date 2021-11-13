@@ -1,11 +1,12 @@
-package org.helllynx.ssh.helper
+package org.helllynx.ssh.helper.composable
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import org.helllynx.ssh.helper.Dialog
+import org.helllynx.ssh.helper.DropdownDemo
 
 @Composable
 internal fun SettingsDialog(

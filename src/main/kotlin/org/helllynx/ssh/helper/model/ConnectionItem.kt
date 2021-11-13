@@ -1,4 +1,4 @@
-package org.helllynx.ssh.helper
+package org.helllynx.ssh.helper.model
 
 import kotlinx.serialization.Serializable
 

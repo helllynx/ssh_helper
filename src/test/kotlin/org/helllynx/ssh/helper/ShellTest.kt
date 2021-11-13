@@ -1,6 +1,7 @@
 package org.helllynx.ssh.helper
 
 import kotlinx.coroutines.runBlocking
+import org.helllynx.ssh.helper.model.ConnectionItem
 import org.junit.jupiter.api.Test
 
 
