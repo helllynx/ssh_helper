@@ -1,11 +1,13 @@
 package org.helllynx.ssh.helper
 
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import org.helllynx.ssh.helper.composable.CommandCopyPastDialog
 import org.helllynx.ssh.helper.model.ConnectionItem
 import org.helllynx.ssh.helper.store.JsonLocalStore
 import org.helllynx.ssh.helper.store.Store
@@ -54,9 +56,18 @@ internal class RootStore {
 
         Files.createDirectories(Paths.get(pathToSshfsMountDir))
 
+        if (connection.password.isNotEmpty()) {
+            setState { copy(exceptionCommand = ExceptionSSHFSCommand(commandSshfs, connection.password)) }
+            return
+        }
+
         GlobalScope.launch {
             commandSshfs.runCommand()
         }
+    }
+
+    fun onExceptionCommandCloseClicked() {
+        setState { copy(exceptionCommand = null) }
     }
 
     fun onAddItemClicked() {
@@ -144,5 +155,8 @@ internal class RootStore {
         val items: List<ConnectionItem> = emptyList(),
         val inputText: String = "",
         val editingItemId: Long? = null,
+        var exceptionCommand: ExceptionSSHFSCommand? = null,
     )
+
+    data class ExceptionSSHFSCommand(val command: String, val password: String)
 }

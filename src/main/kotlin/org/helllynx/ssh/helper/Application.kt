@@ -11,6 +11,7 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
+import org.helllynx.ssh.helper.composable.CommandCopyPastDialog
 import org.helllynx.ssh.helper.composable.EditDialog
 import org.helllynx.ssh.helper.model.ConnectionItem
 
@@ -66,10 +67,18 @@ fun RootContent(modifier: Modifier = Modifier) {
     }
 
 
+    state.exceptionCommand?.also { command ->
+        CommandCopyPastDialog(
+            command = command.command,
+            password = command.password,
+            onCloseClicked = model::onExceptionCommandCloseClicked
+        )
+    }
 }
 
 private val RootStore.RootState.editingItem: ConnectionItem?
     get() = editingItemId?.let(items::firstById)
+
 
 private fun List<ConnectionItem>.firstById(id: Long): ConnectionItem =
     first { it.id==id }
