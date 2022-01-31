@@ -25,19 +25,6 @@ fun App() {
     }
 }
 
-fun main() = application {
-    Window(
-        onCloseRequest = ::exitApplication,
-        title = "SSH manager",
-        state = rememberWindowState(
-            position = WindowPosition(alignment = Alignment.Center),
-        ),
-    ) {
-        App()
-    }
-}
-
-
 @Composable
 fun RootContent(modifier: Modifier = Modifier) {
     val model = remember { RootStore() }
