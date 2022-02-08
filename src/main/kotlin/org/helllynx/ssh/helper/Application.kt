@@ -12,6 +12,7 @@ import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import org.helllynx.ssh.helper.composable.CommandCopyPastDialog
+import org.helllynx.ssh.helper.composable.DetailsDialog
 import org.helllynx.ssh.helper.composable.EditDialog
 import org.helllynx.ssh.helper.model.ConnectionItem
 
@@ -37,6 +38,7 @@ fun RootContent(modifier: Modifier = Modifier) {
         onItemLongClicked = model::onItemLongClicked,
         onItemDeleteClicked = model::onItemDeleteClicked,
         onItemSshfsClicked = model::onItemSshfsClicked,
+        onItemDetailsClicked = model::onItemDetailsClicked,
         onAddItemClicked = model::onAddItemClicked,
     )
 
@@ -61,10 +63,21 @@ fun RootContent(modifier: Modifier = Modifier) {
             onCloseClicked = model::onExceptionCommandCloseClicked
         )
     }
+
+    state.detailsItem?.also { item ->
+        DetailsDialog(
+            item = item,
+            onCloseClicked = model::onItemDetailsCloseClicked,
+            onItemDetailsChanged = model::onItemDetailsChanged
+        )
+    }
 }
 
 private val RootStore.RootState.editingItem: ConnectionItem?
     get() = editingItemId?.let(items::firstById)
+
+private val RootStore.RootState.detailsItem: ConnectionItem?
+    get() = detailsItemId?.let(items::firstById)
 
 
 private fun List<ConnectionItem>.firstById(id: Long): ConnectionItem =

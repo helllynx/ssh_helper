@@ -66,6 +66,22 @@ internal class RootStore {
         }
     }
 
+    fun onItemDetailsClicked(id: Long) {
+        setState { copy(detailsItemId = id) }
+    }
+
+    fun onItemDetailsCloseClicked() {
+        setState { copy(detailsItemId = null) }
+    }
+
+    fun onItemDetailsChanged(text: String) {
+        setState {
+            updateItem(id = requireNotNull(detailsItemId)) {
+                it.copy(details = text)
+            }
+        }
+    }
+
     fun onExceptionCommandCloseClicked() {
         setState { copy(exceptionCommand = null) }
     }
@@ -78,7 +94,7 @@ internal class RootStore {
                     label = inputText,
                 )
 
-            copy(items = items + newItem, inputText = "")
+            copy(items = items + newItem, inputText = "New Connection")
         }
     }
 
@@ -154,9 +170,10 @@ internal class RootStore {
     data class RootState(
         val items: List<ConnectionItem> = emptyList(),
         val inputText: String = "",
-        val editingItemId: Long? = null,
         var exceptionCommand: ExceptionSSHFSCommand? = null,
-    )
+        val editingItemId: Long? = null,
+        val detailsItemId: Long? = null,
+        )
 
     data class ExceptionSSHFSCommand(val command: String, val password: String)
 }

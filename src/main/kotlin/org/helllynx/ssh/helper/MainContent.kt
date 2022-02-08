@@ -29,6 +29,7 @@ internal fun MainContent(
     onItemLongClicked: (id: Long) -> Unit,
     onItemDeleteClicked: (id: Long) -> Unit,
     onItemSshfsClicked: (id: Long) -> Unit,
+    onItemDetailsClicked: (id: Long) -> Unit,
     onAddItemClicked: () -> Unit,
 ) {
     Column(modifier) {
@@ -44,6 +45,7 @@ internal fun MainContent(
                 onItemLongClicked = onItemLongClicked,
                 onItemDeleteClicked = onItemDeleteClicked,
                 onItemSshfsClicked = onItemSshfsClicked,
+                onItemDetailsClicked = onItemDetailsClicked,
             )
         }
 
@@ -58,6 +60,7 @@ private fun ListContent(
     onItemLongClicked: (id: Long) -> Unit,
     onItemDeleteClicked: (id: Long) -> Unit,
     onItemSshfsClicked: (id: Long) -> Unit,
+    onItemDetailsClicked: (id: Long) -> Unit,
 ) {
     Box {
         val listState = rememberLazyListState()
@@ -69,7 +72,8 @@ private fun ListContent(
                     onClicked = { onItemClicked(item.id) },
                     onLongClicked = { onItemLongClicked(item.id) },
                     onDeleteClicked = { onItemDeleteClicked(item.id) },
-                    onMountSshfs = { onItemSshfsClicked(item.id) },
+                    onMountSshfsClicked = { onItemSshfsClicked(item.id) },
+                    onDetailsClicked = { onItemDetailsClicked(item.id) },
                 )
 
                 Divider()
@@ -90,7 +94,8 @@ private fun Item(
     onClicked: () -> Unit,
     onLongClicked: () -> Unit,
     onDeleteClicked: () -> Unit,
-    onMountSshfs: () -> Unit,
+    onMountSshfsClicked: () -> Unit,
+    onDetailsClicked: () -> Unit,
 ) {
     Row(modifier = Modifier.combinedClickable(onClick = onClicked, onLongClick = onLongClicked)) {
         Spacer(modifier = Modifier.width(8.dp))
@@ -110,9 +115,16 @@ private fun Item(
 
         Spacer(modifier = Modifier.width(8.dp))
 
-        IconButton(onClick = onMountSshfs) {
+        IconButton(onClick = onMountSshfsClicked) {
             Icon(
                 imageVector = Icons.Default.Share,
+                contentDescription = null
+            )
+        }
+
+        IconButton(onClick = onDetailsClicked) {
+            Icon(
+                imageVector = Icons.Default.Email,
                 contentDescription = null
             )
         }

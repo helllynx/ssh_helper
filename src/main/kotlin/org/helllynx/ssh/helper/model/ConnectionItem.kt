@@ -9,5 +9,6 @@ data class ConnectionItem(
     val host: String = "",
     val port: String = "22",
     val user: String = "root",
-    val password: String = ""
+    val password: String = "",
+    val details: String = "",
 )
