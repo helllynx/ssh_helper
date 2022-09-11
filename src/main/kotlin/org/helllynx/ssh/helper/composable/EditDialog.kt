@@ -24,7 +24,10 @@ internal fun EditDialog(
         title = "Edit connection",
         onCloseRequest = onCloseClicked,
     ) {
-        Column(horizontalAlignment = Alignment.Start, verticalArrangement = Arrangement.Top) {
+        Column(
+            horizontalAlignment = Alignment.Start,
+            verticalArrangement = Arrangement.Top,
+        ) {
             TextField(
                 value = item.label,
                 modifier = Modifier.fillMaxWidth().sizeIn(minHeight = 24.dp),
