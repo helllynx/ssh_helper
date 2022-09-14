@@ -27,8 +27,8 @@ internal class RootStore {
         }
 
         val commandSsh = when (connection.password.isEmpty()) {
-            true -> "konsole -e ssh ${connection.user}@${connection.host} -p ${connection.port}"
-            false -> "konsole -e sshpass -p ${connection.password} ssh ${connection.user}@${connection.host} -p ${connection.port}"
+            true -> "konsole -e ssh -o ServerAliveInterval=15 -o ServerAliveCountMax=3 ${connection.user}@${connection.host} -p ${connection.port}"
+            false -> "konsole -e sshpass -p ${connection.password} ssh -o ServerAliveInterval=15 -o ServerAliveCountMax=3 ${connection.user}@${connection.host} -p ${connection.port}"
         }
         GlobalScope.launch {
             commandSsh.runCommand()
@@ -52,7 +52,7 @@ internal class RootStore {
 
         val pathToSshfsMountDir = "${System.getProperty("user.home")}/SSH_HELPER/${connection.label.filter { !it.isWhitespace() }}"
         val commandSshfs =
-            "sshfs ${connection.user}@${connection.host}:/ $pathToSshfsMountDir -p ${connection.port}"
+            "sshfs -o reconnect,ServerAliveInterval=15,ServerAliveCountMax=3 ${connection.user}@${connection.host}:/ $pathToSshfsMountDir -p ${connection.port}"
 
         Files.createDirectories(Paths.get(pathToSshfsMountDir))
 
