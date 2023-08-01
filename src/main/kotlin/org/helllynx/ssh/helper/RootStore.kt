@@ -71,7 +71,7 @@ internal class RootStore {
         Files.createDirectories(Paths.get(pathToSshfsMountDir))
 
         if (connection.password.isNotEmpty()) {
-            setState { copy(exceptionCommand = ExceptionSSHFSCommand(commandSshfs.joinToString { "$it " }, connection.password)) }
+            setState { copy(exceptionCommand = ExceptionSSHFSCommand(commandSshfs.joinToString(" "), connection.password)) }
             return
         }
 
