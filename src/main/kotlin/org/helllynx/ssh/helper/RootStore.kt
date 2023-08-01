@@ -3,9 +3,9 @@ package org.helllynx.ssh.helper
 import androidx.compose.runtime.*
 import kotlinx.coroutines.*
 import org.helllynx.ssh.helper.model.ConnectionItem
-import org.helllynx.ssh.helper.model.getSshCommand
 import org.helllynx.ssh.helper.store.JsonLocalStore
 import org.helllynx.ssh.helper.store.Store
+import org.helllynx.ssh.helper.utils.getSshCommand
 import org.helllynx.ssh.helper.utils.pingServer
 import org.helllynx.ssh.helper.utils.runCommand
 import java.nio.file.Files
