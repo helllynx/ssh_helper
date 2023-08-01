@@ -14,5 +14,5 @@ fun List<String>.runCommand(
 }.onFailure { it.printStackTrace() }.getOrNull()
 
 fun String.runCommand(): String? {
-    return listOf(this).runCommand()
+    return "\\s".toRegex().split(this).runCommand()
 }

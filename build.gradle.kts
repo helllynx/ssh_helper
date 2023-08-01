@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "org.ssh.helper"
-version = "1.0.2"
+version = "1.0.3"
 
 repositories {
     google()

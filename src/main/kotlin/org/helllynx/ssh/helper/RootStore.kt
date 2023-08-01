@@ -66,12 +66,12 @@ internal class RootStore {
 
         val pathToSshfsMountDir = "${System.getProperty("user.home")}/SSH_HELPER/${connection.label.filter { !it.isWhitespace() }}"
         val commandSshfs =
-            "sshfs -o reconnect,ServerAliveInterval=15,ServerAliveCountMax=3 ${connection.user}@${connection.host}:/ $pathToSshfsMountDir -p ${connection.port}"
+            "sshfs -o reconnect,ServerAliveInterval=15,ServerAliveCountMax=3 ${connection.user}@${connection.host}:/ $pathToSshfsMountDir -p ${connection.port}".split(" ")
 
         Files.createDirectories(Paths.get(pathToSshfsMountDir))
 
         if (connection.password.isNotEmpty()) {
-            setState { copy(exceptionCommand = ExceptionSSHFSCommand(commandSshfs, connection.password)) }
+            setState { copy(exceptionCommand = ExceptionSSHFSCommand(commandSshfs.joinToString { "$it " }, connection.password)) }
             return
         }
 
