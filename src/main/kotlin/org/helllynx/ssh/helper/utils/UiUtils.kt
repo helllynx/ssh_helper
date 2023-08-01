@@ -19,6 +19,8 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.window.DialogWindow
+import androidx.compose.ui.window.DialogWindowScope
 
 internal fun Modifier.onKeyUp(key: Key, action: () -> Unit): Modifier =
     onKeyEvent { event ->
@@ -57,10 +59,9 @@ internal fun Dialog(
     onCloseRequest: () -> Unit,
     content: @Composable () -> Unit
 ) {
-    androidx.compose.ui.window.Dialog(
-        onCloseRequest = onCloseRequest,
-        focusable = true,
+    DialogWindow(onCloseRequest = onCloseRequest,
         title = title,
+        focusable = true,
     ) {
         Box(
             modifier = Modifier
@@ -74,7 +75,6 @@ internal fun Dialog(
 }
 
 
-
 @Preview
 @Composable
 fun DropdownDemo() {
@@ -83,7 +83,7 @@ fun DropdownDemo() {
     val disabledValue = "B"
     var selectedIndex by remember { mutableStateOf(0) }
     Box(modifier = Modifier.fillMaxSize().wrapContentSize(Alignment.TopStart)) {
-        Text(items[selectedIndex],modifier = Modifier.fillMaxWidth().clickable(onClick = { expanded = true }).background(
+        Text(items[selectedIndex], modifier = Modifier.fillMaxWidth().clickable(onClick = { expanded = true }).background(
             Color.Gray))
         DropdownMenu(
             expanded = expanded,
@@ -96,7 +96,7 @@ fun DropdownDemo() {
                     selectedIndex = index
                     expanded = false
                 }) {
-                    val disabledText = if (s == disabledValue) {
+                    val disabledText = if (s==disabledValue) {
                         " (Disabled)"
                     } else {
                         ""
