@@ -81,14 +81,14 @@ internal class RootStore {
     }
 
     fun onItemDetailsClicked(id: Long) {
-//        setState { copy(detailsItemId = id) }
+        setState { copy(detailsItemId = id) }
         val connection = state.items.first {
             it.id==id
         }
 
         setState {
             updateItem(id = requireNotNull(detailsItemId)) {
-                it.copy(details = connection.getSshCommand().joinToString { " " })
+                it.copy(details = connection.getSshCommand(copyPasteMode = true).joinToString(" "))
             }
         }
     }
