@@ -49,7 +49,7 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "SshHelper"
-            packageVersion = "1.0.1"
+            packageVersion = version.toString()
         }
     }
 }
