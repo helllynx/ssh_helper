@@ -16,15 +16,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import org.helllynx.ssh.helper.VerticalScrollbar
 import org.helllynx.ssh.helper.model.ConnectionItem
-import org.helllynx.ssh.helper.rememberScrollbarAdapter
+import org.helllynx.ssh.helper.utils.MARGIN_SCROLLBAR
 
 @Composable
 internal fun MainContent(

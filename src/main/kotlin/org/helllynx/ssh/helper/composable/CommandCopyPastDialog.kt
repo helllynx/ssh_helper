@@ -6,8 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import org.helllynx.ssh.helper.Dialog
-import org.helllynx.ssh.helper.model.ConnectionItem
+import org.helllynx.ssh.helper.utils.Dialog
 
 @Composable
 internal fun CommandCopyPastDialog(

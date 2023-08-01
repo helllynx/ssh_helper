@@ -6,6 +6,7 @@ import org.helllynx.ssh.helper.model.ConnectionItem
 import org.helllynx.ssh.helper.model.getSshCommand
 import org.helllynx.ssh.helper.store.JsonLocalStore
 import org.helllynx.ssh.helper.store.Store
+import org.helllynx.ssh.helper.utils.pingServer
 import org.helllynx.ssh.helper.utils.runCommand
 import java.nio.file.Files
 import java.nio.file.Paths
@@ -16,14 +17,21 @@ internal class RootStore {
     var state: RootState by mutableStateOf(initialState())
         private set
 
-//    var job: Job = GlobalScope.launch {
-//        while (true) {
-//            delay(3000)
-//            state.items.forEach {
-//                it.available = pingServer(it.host)
-//            }
-//        }
-//    }
+    var job: Job = GlobalScope.launch {
+        while (true) {
+            try {
+                delay(1000)
+                state.items.forEach { it ->
+                    setState {
+                        updateItem(id = requireNotNull(it.id)) { it.copy(available = pingServer(it.host)) }
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                delay(2000)
+            }
+        }
+    }
 
     @OptIn(DelicateCoroutinesApi::class)
     fun onItemClicked(id: Long) {
@@ -31,7 +39,7 @@ internal class RootStore {
             it.id==id
         }
 
-        GlobalScope.launch {
+        GlobalScope.launch { // TODO replace GlobalScope with something more safe
             connection.getSshCommand().runCommand().apply {
                 println(this)
             }

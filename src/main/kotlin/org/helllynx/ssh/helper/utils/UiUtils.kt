@@ -1,8 +1,7 @@
-package org.helllynx.ssh.helper
+package org.helllynx.ssh.helper.utils
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -37,9 +36,9 @@ internal val MARGIN_SCROLLBAR: Dp = 8.dp
 @Suppress("ACTUAL_WITHOUT_EXPECT") // Workaround https://youtrack.jetbrains.com/issue/KT-37316
 internal typealias ScrollbarAdapter = androidx.compose.foundation.ScrollbarAdapter
 
-@Composable
-internal fun rememberScrollbarAdapter(scrollState: LazyListState): ScrollbarAdapter =
-    androidx.compose.foundation.rememberScrollbarAdapter(scrollState)
+//@Composable
+//internal fun rememberScrollbarAdapter(scrollState: LazyListState): ScrollbarAdapter =
+//    androidx.compose.foundation.rememberScrollbarAdapter(scrollState)
 
 @Composable
 internal fun VerticalScrollbar(
