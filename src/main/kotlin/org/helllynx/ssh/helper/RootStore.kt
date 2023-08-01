@@ -21,14 +21,17 @@ internal class RootStore {
         while (true) {
             try {
                 delay(1000)
-                state.items.forEach { it ->
+                state.items.parallelStream().map {item ->
+                    item to pingServer(item.host)
+                }.forEach { itemToPing ->
                     setState {
-                        updateItem(id = requireNotNull(it.id)) { it.copy(available = pingServer(it.host)) }
+                        updateItem(id = requireNotNull(itemToPing.first.id)) { it.copy(available = itemToPing.second) }
                     }
                 }
+                delay(30000)
             } catch (e: Exception) {
                 e.printStackTrace()
-                delay(2000)
+                delay(10000)
             }
         }
     }
