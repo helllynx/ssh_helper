@@ -1,25 +1,30 @@
 package org.helllynx.ssh.helper
 
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
-import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.Divider
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import org.helllynx.ssh.helper.VerticalScrollbar
 import org.helllynx.ssh.helper.model.ConnectionItem
+import org.helllynx.ssh.helper.rememberScrollbarAdapter
 
 @Composable
 internal fun MainContent(
@@ -35,7 +40,7 @@ internal fun MainContent(
     Column(modifier) {
         Header(
             onAddClicked = onAddItemClicked,
-            onSettingsClicked = {  },
+            onSettingsClicked = { },
         )
 
         Box(Modifier.weight(1F)) {
@@ -87,6 +92,21 @@ private fun ListContent(
     }
 }
 
+@Composable
+fun PingStatus(color: Color = Color.Red) {
+    Canvas(
+        modifier = Modifier
+            .size(size = 32.dp)
+//            .border(color = Color.Magenta, width = 2.dp)
+    ) {
+        drawCircle(
+//            brush = Brush.horizontalGradient(colors = listOf(Color.Green, Color.Yellow)),
+            color = color,
+            radius = 8.dp.toPx()
+        )
+    }
+}
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun Item(
@@ -99,6 +119,14 @@ private fun Item(
 ) {
     Row(modifier = Modifier.combinedClickable(onClick = onClicked, onLongClick = onLongClicked)) {
         Spacer(modifier = Modifier.width(8.dp))
+
+        when(item.available) {
+            true -> PingStatus(Color.Green)
+            false -> PingStatus(Color.Red)
+        }
+
+        Spacer(modifier = Modifier.width(8.dp))
+
         Text(
             text = AnnotatedString(item.label),
             modifier = Modifier.weight(1F).align(Alignment.CenterVertically),
@@ -149,7 +177,7 @@ private fun Header(
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.End,
-        modifier = Modifier.padding(8.dp).background(Color.LightGray, shape = RoundedCornerShape(4.dp) )
+        modifier = Modifier.padding(8.dp).background(Color.LightGray, shape = RoundedCornerShape(4.dp))
     ) {
         IconButton(onClick = onAddClicked) {
             Icon(

@@ -1,16 +1,12 @@
 package org.helllynx.ssh.helper
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import org.helllynx.ssh.helper.composable.CommandCopyPastDialog
+import androidx.compose.runtime.*
+import kotlinx.coroutines.*
 import org.helllynx.ssh.helper.model.ConnectionItem
+import org.helllynx.ssh.helper.model.getSshCommand
 import org.helllynx.ssh.helper.store.JsonLocalStore
 import org.helllynx.ssh.helper.store.Store
+import org.helllynx.ssh.helper.utils.runCommand
 import java.nio.file.Files
 import java.nio.file.Paths
 
@@ -20,18 +16,25 @@ internal class RootStore {
     var state: RootState by mutableStateOf(initialState())
         private set
 
+//    var job: Job = GlobalScope.launch {
+//        while (true) {
+//            delay(3000)
+//            state.items.forEach {
+//                it.available = pingServer(it.host)
+//            }
+//        }
+//    }
+
     @OptIn(DelicateCoroutinesApi::class)
     fun onItemClicked(id: Long) {
         val connection = state.items.first {
-            it.id == id
+            it.id==id
         }
 
-        val commandSsh = when (connection.password.isEmpty()) {
-            true -> "konsole -e ssh -o ServerAliveInterval=15 -o ServerAliveCountMax=3 ${connection.user}@${connection.host} -p ${connection.port}"
-            false -> "konsole -e sshpass -p ${connection.password} ssh -o ServerAliveInterval=15 -o ServerAliveCountMax=3 ${connection.user}@${connection.host} -p ${connection.port}"
-        }
         GlobalScope.launch {
-            commandSsh.runCommand()
+            connection.getSshCommand().runCommand().apply {
+                println(this)
+            }
         }
     }
 
@@ -40,14 +43,14 @@ internal class RootStore {
     }
 
     fun onItemDeleteClicked(id: Long) {
-        setState { copy(items = items.filterNot { it.id == id }) }
+        setState { copy(items = items.filterNot { it.id==id }) }
         store.saveConnections(state.items)
     }
 
     @OptIn(DelicateCoroutinesApi::class)
     fun onItemSshfsClicked(id: Long) {
         val connection = state.items.first {
-            it.id == id
+            it.id==id
         }
 
         val pathToSshfsMountDir = "${System.getProperty("user.home")}/SSH_HELPER/${connection.label.filter { !it.isWhitespace() }}"
@@ -67,7 +70,16 @@ internal class RootStore {
     }
 
     fun onItemDetailsClicked(id: Long) {
-        setState { copy(detailsItemId = id) }
+//        setState { copy(detailsItemId = id) }
+        val connection = state.items.first {
+            it.id==id
+        }
+
+        setState {
+            updateItem(id = requireNotNull(detailsItemId)) {
+                it.copy(details = connection.getSshCommand().joinToString { " " })
+            }
+        }
     }
 
     fun onItemDetailsCloseClicked() {
@@ -147,7 +159,7 @@ internal class RootStore {
         }
     }
 
-    private fun RootStore.getItem(id: Long): ConnectionItem = state.items.first { it.id == id }
+    private fun RootStore.getItem(id: Long): ConnectionItem = state.items.first { it.id==id }
 
     private fun RootState.updateItem(id: Long, transformer: (ConnectionItem) -> ConnectionItem): RootState =
         copy(items = items.updateItem(id = id, transformer = transformer))
@@ -156,7 +168,7 @@ internal class RootStore {
         id: Long,
         transformer: (ConnectionItem) -> ConnectionItem
     ): List<ConnectionItem> =
-        map { item -> if (item.id == id) transformer(item) else item }
+        map { item -> if (item.id==id) transformer(item) else item }
 
     private fun initialState(): RootState =
         RootState(
@@ -173,7 +185,7 @@ internal class RootStore {
         var exceptionCommand: ExceptionSSHFSCommand? = null,
         val editingItemId: Long? = null,
         val detailsItemId: Long? = null,
-        )
+    )
 
     data class ExceptionSSHFSCommand(val command: String, val password: String)
 }

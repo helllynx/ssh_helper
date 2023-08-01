@@ -22,10 +22,17 @@ internal fun DetailsDialog(
         Column(horizontalAlignment = Alignment.Start, verticalArrangement = Arrangement.Top) {
             TextField(
                 value = item.details,
-                modifier = Modifier.fillMaxWidth().sizeIn(minHeight = 300.dp),
+                modifier = Modifier.fillMaxWidth().sizeIn(minHeight = 150.dp),
                 label = { Text("info") },
                 onValueChange = onItemDetailsChanged,
-                maxLines = 10
+                maxLines = 5
+            )
+            TextField(
+                value = item.details,
+                modifier = Modifier.fillMaxWidth().sizeIn(minHeight = 100.dp),
+                label = { Text("ssh") },
+                onValueChange = onItemDetailsChanged,
+                maxLines = 2
             )
         }
     }

@@ -1,11 +1,10 @@
-import org.jetbrains.compose.compose
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.7.10"
-    kotlin("plugin.serialization") version "1.7.10"
-    id("org.jetbrains.compose") version "1.2.0-alpha01-dev770"
+    kotlin("jvm") version "1.7.20"
+    kotlin("plugin.serialization") version "1.7.20"
+    id("org.jetbrains.compose") version "1.3.0-beta04-dev885"
 }
 
 group = "org.ssh.helper"
@@ -19,7 +18,7 @@ repositories {
 
 dependencies {
     implementation(compose.desktop.currentOs)
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")
     implementation("org.junit.jupiter:junit-jupiter:5.9.0")
 }
 

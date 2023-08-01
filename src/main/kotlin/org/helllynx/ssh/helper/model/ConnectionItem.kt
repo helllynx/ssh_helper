@@ -11,4 +11,13 @@ data class ConnectionItem(
     val user: String = "root",
     val password: String = "",
     val details: String = "",
+    var available: Boolean = false,
 )
+
+fun ConnectionItem.getSshCommand(): List<String> {
+    val commandSsh = when (password.isEmpty()) {
+        true  -> listOf("/bin/bash", "-ic", "konsole -e \"ssh -o ServerAliveInterval=15 -o ServerAliveCountMax=3 ${user}@${host} -p $port\"")
+        false -> listOf("/bin/bash", "-ic", "konsole -e \"sshpass -p $password ssh -o ServerAliveInterval=15 -o ServerAliveCountMax=3 ${user}@${host} -p $port\"")
+    }
+    return commandSsh
+}
