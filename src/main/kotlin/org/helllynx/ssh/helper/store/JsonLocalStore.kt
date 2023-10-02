@@ -13,7 +13,7 @@ import java.nio.file.Paths
 class JsonLocalStore : Store {
 
     private val pathToHome = System.getProperty("user.home")
-    private val pathToAppFolder = "$pathToHome/.ssh_helper"
+    private val pathToAppFolder = "$pathToHome/Sync/ssh_helper"
     private val pathToJsonFile = "$pathToAppFolder/store.json"
 
     init {
